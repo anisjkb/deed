@@ -1,0 +1,42 @@
+<section id="awards" class="section section-muted">
+  <div class="container">
+    <header class="section-header">
+      <h2 class="h2">Awards & Recognition</h2>
+      <p class="muted">Recognized for design excellence & quality delivery.</p>
+    </header>
+
+    <!-- Scroller viewport -->
+    <div class="awards-scroller" data-speed="60">
+      <ul class="awards-track">
+        {% for a in awards or [] %}
+          <li class="award">
+            <img src="{{ a.image_url or '/static/images/awards/award1.png' }}"
+                 alt="{{ a.title }} logo" loading="lazy" width="160" height="160">
+            <div class="award-body">
+              <strong>{{ a.title }}</strong>
+              {% if a.issuer or a.year %}
+                <div class="muted">{{ a.issuer }}{% if a.year %} · {{ a.year }}{% endif %}</div>
+              {% endif %}
+              {% if a.description %}<p>{{ a.description }}</p>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+
+        <!-- Duplicate once for seamless infinite loop -->
+        {% for a in awards or [] %}
+          <li class="award">
+            <img src="{{ a.image_url or '/static/images/awards/award1.png' }}"
+                 alt="{{ a.title }} logo" loading="lazy" width="160" height="160">
+            <div class="award-body">
+              <strong>{{ a.title }}</strong>
+              {% if a.issuer or a.year %}
+                <div class="muted">{{ a.issuer }}{% if a.year %} · {{ a.year }}{% endif %}</div>
+              {% endif %}
+              {% if a.description %}<p>{{ a.description }}</p>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>

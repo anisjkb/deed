@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section container">
+  <h3 class="h3">Share your feedback</h3>
+  <form id="feedbackForm" class="form" method="post" action="/api/feedback" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    <div class="grid-3">
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          minlength="2"
+          maxlength="120"
+          pattern="^[A-Za-z .]{2,120}$"
+          placeholder="Enter your name"
+          aria-describedby="nameHelp nameErr"
+        >
+        <small id="nameHelp" class="muted">Letters, spaces, and periods allowed.</small>
+        <div id="nameErr" class="field-error"></div>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          required
+          minlength="7"
+          maxlength="20"
+          pattern="^\+?[0-9 ()-]{7,20}$"
+          placeholder="+8801XXXXXXXXX or +1 555 123 4567"
+          aria-describedby="phoneHelp phoneErr"
+        >
+        <small id="phoneHelp" class="muted">Include country code if outside Bangladesh.</small>
+        <div id="phoneErr" class="field-error"></div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          maxlength="160"
+          placeholder="you@example.com"
+          aria-describedby="emailHelp emailErr"
+        >
+        <small id="emailHelp" class="muted">Optional but recommended.</small>
+        <div id="emailErr" class="field-error"></div>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="form-group full-width">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        maxlength="1000"
+        placeholder="Tell us your thoughts (max 1000 characters)"
+      ></textarea>
+      <small id="msgHelp" class="muted">Optional.</small>
+      <div id="msgErr" class="field-error"></div>
+    </div>
+    <button class="btn" type="submit">Submit</button>
+  </form>
+</section>
+
+<!-- External JS -->
+<script src="/static/js/feedback.js?v={{ assetv }}" defer></script>
+{% endblock %}

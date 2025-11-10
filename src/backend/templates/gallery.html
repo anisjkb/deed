@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section container">
+  <h1 class="h1">Gallery</h1>
+  <div class="tabs">
+    <button class="tab active" data-tab="photos">Photos</button>
+    <button class="tab" data-tab="videos">Videos</button>
+    <button class="tab" data-tab="newsletter">Newsletter</button>
+  </div>
+  <div class="tab-panels">
+    <div class="panel active" id="photos"><p>Photo grid placeholder. Replace with your images.</p></div>
+    <div class="panel" id="videos"><p>YouTube/Vimeo embeds here (lazy-loaded).</p></div>
+    <div class="panel" id="newsletter"><p>PDF/flipbook links to newsletters.</p></div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{ page_title or 'deed — Modern Real Estate' }}</title>
+  <meta name="description" content="{{ page_desc or 'Premium, biophilic residences across Dhaka.' }}" />
+  <meta property="og:title" content="{{ page_title or 'deed' }}" />
+  <meta property="og:description" content="{{ page_desc or '' }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ request.url }}" />
+  <meta property="og:image" content="/static/images/banners/hero1.jpg?v={{ assetv }}" />
+  <link rel="canonical" href="{{ request.url }}"/>
+
+  <!-- Icons -->
+  <link rel="icon" href="/static/images/favicon/favicon.ico?v={{ assetv }}">
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon/favicon.svg?v={{ assetv }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon/favicon-32.png?v={{ assetv }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon/favicon-16.png?v={{ assetv }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon/apple-touch-icon.png?v={{ assetv }}">
+  
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/static/css/common.css?v={{ assetv }}" />
+  <link rel="stylesheet" href="/static/css/header.css?v={{ assetv }}" />
+  {# If you want banner CSS globally on all pages, uncomment below and remove it from _banner.html #}
+  {# <link rel="stylesheet" href="/static/css/banner.css?v={{ assetv }}" /> #}
+
+  <!-- Core JS (deferred) -->
+  <script defer src="/static/js/nav.js?v={{ assetv }}"></script>
+  <script defer src="/static/js/main.js?v={{ assetv }}"></script>
+  {# If you want slider JS globally on all pages, uncomment below and remove it from _banner.html #}
+  {# <script defer src="/static/js/slider.js?v={{ assetv }}"></script> #}
+
+  {# Page-specific head injections (e.g., extra preloads, structured data) #}
+  {# --- Conditional preload for the homepage/any page with banner --- #}
+  
+  {% if page_has_banner %}
+    <link rel="preload" as="image" href="/static/images/banners/hero1.jpg" fetchpriority="high">
+  {% endif %}
+  
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% include 'partials/_header.html' %}
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  {% include 'partials/_awards.html' %}
+  {% include 'partials/_footer.html' %}
+</body>
+</html>

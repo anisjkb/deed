@@ -1,0 +1,19 @@
+{#src/backend/templates/projects/index.html#}
+{% extends "base.html" %}
+{% block content %}
+
+{# Variables for the shared partial #}
+{% set items        = projects %}
+{% set form_action  = request.path %}
+{% set heading      = 'Projects' %}
+{% set subheading   = 'Search your desired one' %}
+{% set show_actions = false %}
+
+{# pass current filters, defaulting to '' if not provided #}
+{% set category = category|default('') %}
+{% set ptype    = ptype|default('') %}
+{% set location = location|default('') %}
+
+{% include 'partials/_projects.html' %}
+
+{% endblock %}

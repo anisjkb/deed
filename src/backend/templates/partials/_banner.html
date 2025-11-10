@@ -1,0 +1,43 @@
+{# templates/partials/_banner.html #}
+<section class="banner-slider" aria-roledescription="carousel" tabindex="0">
+  <!-- data-autoplay = delay per slide (ms); data-transition = fade duration (ms) -->
+  <div class="slider slider--fade" data-autoplay="4000" data-transition="700">
+    {% for b in banners %}
+      <figure class="slide {% if loop.first %}is-active{% endif %}"
+              role="group"
+              aria-label="Slide {{ loop.index }} of {{ banners|length }}"
+              aria-hidden="{{ 'false' if loop.first else 'true' }}">
+        <picture>
+          <source srcset="{{ b.image_url }}" media="(min-width: 1024px)">
+          <img
+            src="{{ b.image_url }}"
+            alt="{{ b.headline or 'Banner' }}"
+            width="1600" height="900"
+            {% if loop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            decoding="async">
+        </picture>
+
+        {# FULL-WIDTH overlay (gradient); content constrained inside #}
+        <figcaption class="slide-caption">
+          <div class="caption-inner container">
+            {% if b.headline %}<h1 class="h1">{{ b.headline }}</h1>{% endif %}
+            {% if b.subhead %}<p class="lead">{{ b.subhead }}</p>{% endif %}
+            {% if b.cta_text and b.cta_url %}<a class="btn" href="{{ b.cta_url }}">{{ b.cta_text }}</a>{% endif %}
+          </div>
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+
+  {# Dots are positioned higher on the hero #}
+  <div class="dots" role="tablist" aria-label="Slide navigation"></div>
+
+  <div class="slider-controls container">
+    <button class="btn-icon prev"  aria-label="Previous slide">‹</button>
+    <button class="btn-icon pause" aria-pressed="false" aria-label="Pause autoplay">❚❚</button>
+    <button class="btn-icon next"  aria-label="Next slide">›</button>
+  </div>
+</section>
+
+<link rel="stylesheet" href="/static/css/banner.css?v={{ assetv }}" />
+<script defer src="/static/js/slider.js?v={{ assetv }}"></script>

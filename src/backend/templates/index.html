@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+  {% include 'partials/_banner.html' %}
+
+  {# Project Section Start #}
+
+  {# Reuse the same projects partial for the homepage teaser and below variable send to "partials/_projects.html" #}
+  {% set items        = featured_projects %}
+  {% set form_action  = '/projects' %}
+  {% set heading      = 'Explore Projects' %}
+  {% set subheading   = 'All · Ongoing · Upcoming · Completed · Type · Location' %}
+  {% set show_actions = true %}
+
+  {# homepage may not have filters in context — default to '' #}
+  {% set category = category|default('') %}
+  {% set ptype    = ptype|default('') %}
+  {% set location = location|default('') %}
+
+  {% include 'partials/_projects.html' %}
+
+  {# Project Section End #}
+
+  <section class="section section-muted">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="h2">Homeowner’s reflections/testimonials</h2>
+        <p class="muted">Real voices from residents & partners</p>
+      </header>
+      <div class="testimonials" data-autoplay="7000">
+        {% for t in testimonials %}
+        <figure class="t-card">
+          <blockquote>“{{ t.quote }}”</blockquote>
+          <figcaption><strong>{{ t.name }}</strong> — {{ t.role or '' }}{% if t.project %}, {{ t.project }}{% endif %}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% include 'partials/_schedule_meeting.html' %}
+
+{% endblock %}

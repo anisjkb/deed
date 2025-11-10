@@ -1,0 +1,275 @@
+{# templates/partials/_schedule_meeting.html #}
+<section id="schedule" class="section">
+  <div class="container">
+    <div class="meeting-grid">
+      <!-- Left: image -->
+      <aside class="meeting-media">
+        <img
+          src="{{ meeting_image_url or '/static/images/meeting/hero.jpg' }}"
+          alt="Showroom / model apartment terrace"
+          width="1200" height="900" loading="lazy" decoding="async">
+      </aside>
+
+      <!-- Right: form card -->
+      <div class="meeting-card">
+        <h2 class="meeting-title">SCHEDULE A MEETING</h2>
+
+        <form id="meetingForm" class="form form-meeting" method="post" action="/api/meetings" novalidate>
+          <!-- CSRF (server injects; JS will backfill from cookie if empty) -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+          <div class="row">
+            <!-- Name (required) -->
+            <div class="field form-group">
+              <label for="m-name">Full Name*</label>
+              <input
+                id="m-name"
+                name="name"
+                type="text"
+                required
+                minlength="2"
+                maxlength="120"
+                pattern="^[A-Za-z .]{2,120}$"
+                placeholder="Full Name"
+                autocomplete="name"
+                aria-describedby="m-name-help m-name-err"
+              >
+              <small id="m-name-help" class="muted">Use letters, spaces, and periods only.</small>
+              <div id="m-name-err" class="field-error"></div>
+            </div>
+
+            <!-- Phone (required) -->
+            <div class="field form-group">
+              <label for="m-phone">Phone Number*</label>
+              <input
+                id="m-phone"
+                name="phone"
+                type="tel"
+                required
+                minlength="7"
+                maxlength="20"
+                pattern="^\\+?[0-9 ()-]{7,20}$"
+                placeholder="+8801XXXXXXXXX"
+                inputmode="tel"
+                autocomplete="tel"
+                aria-describedby="m-phone-help m-phone-err"
+              >
+              <small id="m-phone-help" class="muted">International format allowed (e.g., +8801…, +1 555 123 4567).</small>
+              <div id="m-phone-err" class="field-error"></div>
+            </div>
+
+            <!-- Email (optional) -->
+            <div class="field form-group">
+              <label for="m-email">Email Address</label>
+              <input
+                id="m-email"
+                name="email"
+                type="email"
+                maxlength="160"
+                placeholder="you@example.com"
+                autocomplete="email"
+                aria-describedby="m-email-help m-email-err"
+              >
+              <small id="m-email-help" class="muted">Optional, but helps us reach you quickly.</small>
+              <div id="m-email-err" class="field-error"></div>
+            </div>
+
+            <!-- Preferred Date (required) -->
+            <div class="field form-group">
+              <label for="m-date">Preferred Date*</label>
+              <input
+                id="m-date"
+                name="preferred_date"
+                type="date"
+                required
+                aria-describedby="m-date-help m-date-weekday m-date-err"
+              >
+              <small id="m-date-help" class="muted">Choose a date (today to next 6 months).</small>
+              <div id="m-date-weekday" class="muted" aria-live="polite"></div>
+              <div id="m-date-err" class="field-error"></div>
+            </div>
+
+            <!-- Preferred Time (required) -->
+            <div class="field form-group">
+              <label for="m-time">Select a Time*</label>
+              <select
+                id="m-time"
+                name="preferred_time_slot"
+                required
+                aria-describedby="m-time-err"
+              >
+                <option value="">Select A Time</option>
+                <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+                <option>12:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+                <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+              </select>
+              <div id="m-time-err" class="field-error"></div>
+            </div>
+
+            <!-- Message (required per your request) -->
+            <div class="field form-group" style="grid-column: 1 / -1;">
+              <label for="m-msg">Message*</label>
+              <textarea
+                id="m-msg"
+                name="message"
+                required
+                rows="3"
+                minlength="5"
+                maxlength="1000"
+                placeholder="Tell us what you’d like to discuss"
+                aria-describedby="m-msg-help m-msg-err"
+              ></textarea>
+              <small id="m-msg-help" class="muted">5–1000 characters.</small>
+              <div id="m-msg-err" class="field-error"></div>
+            </div>
+
+            <input type="hidden" name="source_page" value="{{ request.url.path }}">
+          </div>
+
+          <button type="submit" class="btn btn-quiet">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  // ---------- CSRF backfill from cookie (if template var is empty) ----------
+  function getCookie(name) {
+    return document.cookie
+      .split('; ')
+      .find(row => row.startsWith(name + '='))?.split('=')[1] || '';
+  }
+  const form = document.getElementById('meetingForm');
+  if (!form) return;
+  const csrfHidden = form.querySelector('input[name="csrf_token"]');
+  if (csrfHidden && (!csrfHidden.value || csrfHidden.value.trim() === '')) {
+    const cookie = getCookie('csrftoken');
+    if (cookie) csrfHidden.value = cookie;
+  }
+
+  // ---------- Date: min=today, max=+180 days, weekday preview ----------
+  const dateInput = document.getElementById('m-date');
+  const weekdayEl = document.getElementById('m-date-weekday');
+  const dateErr = document.getElementById('m-date-err');
+
+  function iso(d){
+    const y=d.getFullYear();
+    const m=String(d.getMonth()+1).padStart(2,'0');
+    const dd=String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${dd}`;
+  }
+  function nice(d){
+    return d.toLocaleDateString(undefined,{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  }
+  const today = new Date();
+  const max = new Date(); max.setDate(today.getDate()+180);
+  dateInput.min = iso(today);
+  dateInput.max = iso(max);
+  if (dateInput.type !== 'date'){ // fallback
+    dateInput.placeholder='YYYY-MM-DD';
+    dateInput.pattern='^\\d{4}-\\d{2}-\\d{2}$';
+  }
+  function updateWeekday(){
+    dateErr.textContent='';
+    if(!dateInput.value){ weekdayEl.textContent=''; return; }
+    const d = new Date(dateInput.value+'T00:00:00');
+    weekdayEl.textContent = isNaN(d) ? '' : nice(d);
+  }
+  dateInput.addEventListener('input', updateWeekday);
+  dateInput.addEventListener('change', updateWeekday);
+
+  // ---------- Client-side validation with nice messages ----------
+  const fields = {
+    name: {
+      el: document.getElementById('m-name'),
+      err: document.getElementById('m-name-err'),
+      messages: {
+        valueMissing: 'Please enter your full name.',
+        tooShort: 'Name must be at least 2 characters.',
+        tooLong: 'Name must be 120 characters or fewer.',
+        patternMismatch: 'Use letters, spaces, and periods only.'
+      }
+    },
+    phone: {
+      el: document.getElementById('m-phone'),
+      err: document.getElementById('m-phone-err'),
+      messages: {
+        valueMissing: 'Please enter your phone number.',
+        tooShort: 'Phone number looks too short.',
+        tooLong: 'Phone number looks too long.',
+        patternMismatch: 'Use a valid number (digits, spaces, (), -, optional +).'
+      }
+    },
+    email: {
+      el: document.getElementById('m-email'),
+      err: document.getElementById('m-email-err'),
+      optional: true,
+      messages: {
+        typeMismatch: 'That email doesn’t look valid.',
+        tooLong: 'Email must be 160 characters or fewer.'
+      }
+    },
+    preferred_date: {
+      el: document.getElementById('m-date'),
+      err: document.getElementById('m-date-err'),
+      messages: {
+        valueMissing: 'Please choose a preferred date.'
+      }
+    },
+    preferred_time_slot: {
+      el: document.getElementById('m-time'),
+      err: document.getElementById('m-time-err'),
+      messages: {
+        valueMissing: 'Please select a time slot.'
+      }
+    },
+    message: {
+      el: document.getElementById('m-msg'),
+      err: document.getElementById('m-msg-err'),
+      messages: {
+        valueMissing: 'Please write a short message.',
+        tooShort: 'Message must be at least 5 characters.',
+        tooLong: 'Message must be 1000 characters or fewer.'
+      }
+    }
+  };
+
+  function showError(field){
+    const { el, err, messages, optional } = field;
+    err.textContent = '';
+    // Optional + empty => OK
+    if (optional && !el.value) return true;
+
+    if (el.validity.valid) return true;
+
+    const v = el.validity;
+    if      (v.valueMissing && messages.valueMissing) err.textContent = messages.valueMissing;
+    else if (v.tooShort && messages.tooShort)         err.textContent = messages.tooShort;
+    else if (v.tooLong && messages.tooLong)           err.textContent = messages.tooLong;
+    else if (v.patternMismatch && messages.patternMismatch) err.textContent = messages.patternMismatch;
+    else if (v.typeMismatch && messages.typeMismatch) err.textContent = messages.typeMismatch;
+    else                                              err.textContent = 'Please correct this field.';
+    return false;
+  }
+
+  // attach listeners
+  Object.values(fields).forEach(({ el }) => {
+    el.addEventListener('input', () => showError(fields[el.name] || fields[el.id]));
+    el.addEventListener('blur',  () => showError(fields[el.name] || fields[el.id]));
+  });
+
+  form.addEventListener('submit', (e) => {
+    let ok = true;
+    Object.values(fields).forEach(f => { if(!showError(f)) ok = false; });
+    if (!ok) {
+      e.preventDefault();
+      const firstBad = Object.values(fields).find(f => !showError(f));
+      if (firstBad) firstBad.el.focus();
+    }
+  });
+})();
+</script>
+
+<link rel="stylesheet" href="/static/css/meeting.css?v={{ assetv }}">

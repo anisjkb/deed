@@ -1,0 +1,46 @@
+<section id="associate-businesses" class="section section-muted">
+  <div class="container">
+    <header class="section-header">
+      <h2 class="h2">Our Associate Businesses</h2>
+      <p class="muted">Collaborating with the best business partners to deliver quality and innovation.</p>
+    </header>
+
+    <div class="business-scroller" data-speed="60">
+      <div class="cards">
+        {% for associatedbus in allbusiness or [] %}
+          <article class="card">
+            <a href="/associate-businesses/{{ associatedbus.slug }}" class="card-media">
+              <img
+                src="{{ associatedbus.logo_url or '/static/images/businesses/default-logo.png' }}"
+                alt="{{ associatedbus.bus_name }} logo"
+                loading="lazy"
+                width="1200"
+                height="800"
+                onerror="this.onerror=null;this.src='/static/images/businesses/default-logo.png';"
+              >
+            </a>
+            <div class="card-body">
+              <h3 class="h4"><a href="/associate-businesses/{{ associatedbus.slug }}">{{ associatedbus.bus_name }}</a></h3>
+              <p class="muted">{{ associatedbus.location or 'Location not specified' }}</p>
+              {% if associatedbus.description %}
+                <p>{{ associatedbus.description | truncate(150) }}</p>
+              {% else %}
+                <p>No description available.</p>
+              {% endif %}
+
+              <div class="card-actions">
+                <a class="btn btn-secondary" href="/associate-businesses/{{ associatedbus.bus_id }}">Details</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<link rel="stylesheet" href="/static/css/associate_business.css?v={{ assetv }}" />
+<script defer src="/static/js/associate_business.js?v={{ assetv }}"></script>
+{% if not allbusiness %}
+  <p class="text-center">No associate businesses available at the moment. Please check back later.</p>
+{% endif %}

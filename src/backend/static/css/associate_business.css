@@ -1,0 +1,120 @@
+/* Add in your styles.css */
+
+/* Styling for the associate-businesses section */
+#associate-businesses {
+  background-color: #f7f7f7;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#associate-businesses .section-header {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+#associate-businesses h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+}
+
+#associate-businesses .muted {
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+#associate-businesses .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+#associate-businesses .card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#associate-businesses .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+#associate-businesses .card-media {
+  display: block;
+  position: relative;
+}
+
+#associate-businesses .card-media img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+#associate-businesses .card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+#associate-businesses .card-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+#associate-businesses .card-body p.muted {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 10px;
+}
+
+#associate-businesses .card-body p {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* Adjust the Details button style specifically for associate-businesses cards */
+#associate-businesses .card-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#associate-businesses .card-actions .btn {
+  display: inline-block;
+  width: 100%; /* Button takes the full width of the card */
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none; /* Ensure no underline */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+#associate-businesses .card-actions .btn-secondary {
+  background-color: #0056b3;
+  color: white;
+}
+
+#associate-businesses .card-actions .btn-secondary:hover {
+  opacity: 0.9;
+  background-color: #023d7b; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+@media (max-width: 768px) {
+  #associate-businesses .cards {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+  }
+
+  #associate-businesses .card-actions .btn {
+    width: auto; /* Let the button width adjust on smaller screens */
+  }
+}

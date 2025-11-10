@@ -1,0 +1,31 @@
+/* =========================================================
+   ABOUT TEAM PAGE — Consistent with Common Card Design
+   ========================================================= */
+
+.team-page .card {
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow); /* same depth as other cards */
+  transition: transform var(--trans-slow), box-shadow var(--trans-slow);
+}
+
+.team-page .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45); /* identical hover lift */
+  border-color: rgba(12, 124, 144, 0.35);
+}
+
+.team-page .card-media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--r-md);
+  transition: transform 0.3s ease;
+}
+
+.team-page .card-media:hover img {
+  transform: scale(1.03);
+}

@@ -1,0 +1,308 @@
+/* =========================================================
+   Header & Navigation — Professional and User-Friendly Design
+   ========================================================= */
+
+/* ---------- Fixed header + global offsets ---------- */
+:root { --header-h: 72px; }           /* fallback; main.js updates this */
+
+body { padding-top: var(--header-h); } /* push content below fixed header */
+[id] { scroll-margin-top: calc(var(--header-h) + 12px); } /* anchors don't hide */
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;            /* was: sticky */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;              /* above page content */
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border-bottom: 1px solid #EAEAEA;
+  width: 100%;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo-img {
+  width: 120px;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ---------- Top-level Nav (Desktop base) ---------- */
+.site-nav {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.site-nav .menu {
+  list-style: none;  /* no bullets in any menu */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.site-nav a,
+.menu-parent {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: 'Arial', sans-serif;
+  color: #1A2C55;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* unify typography/weight for top-level items (anchors & dropdown parents) */
+.site-nav .menu > li > a,
+.site-nav .menu > li > .menu-parent {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  font-weight: 600;           /* <- pick the weight you want globally */
+}
+.site-nav .menu > li > .menu-parent { font: inherit; } /* kill UA button quirks */
+.site-nav .menu > li > a:hover,
+.site-nav .menu > li > a:focus,
+.site-nav .menu > li > .menu-parent:hover,
+.site-nav .menu > li > .menu-parent:focus,
+.site-nav .menu > li > a[aria-current="page"],
+.site-nav .menu > li > .menu-parent[aria-expanded="true"] {
+  font-weight: 600;           /* keep the same weight in active/hover states */
+}
+
+.site-nav a:hover,
+.menu-parent:hover,
+.site-nav a:focus,
+.menu-parent:focus {
+  background-color: #0C7C90;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Active state underline for desktop */
+.site-nav a.active,
+.site-nav a[aria-current="page"],
+.menu-parent.active,
+.menu-parent[aria-expanded="true"] {
+  background-color: #1A2C55;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.site-nav a.active::after,
+.site-nav a[aria-current="page"]::after,
+.menu-parent.active::after,
+.menu-parent[aria-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+  height: 2px;
+  background-color: #C62828;
+  border-radius: 2px;
+}
+
+/* ---------- Dropdown (Desktop) ---------- */
+.has-sub { position: relative; }
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  z-index: 10;
+  list-style: none;  /* 🚀 remove bullets */
+  margin: 0;
+}
+
+.submenu li { list-style: none; }
+
+.submenu a {
+  padding: 10px 18px;
+  color: #1A2C55;
+  text-decoration: none;
+  display: block;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.submenu a:hover,
+.submenu a:focus {
+  background-color: #F1F8FF;
+  color: #0C7C90;
+}
+
+.has-sub:hover > .submenu,
+.has-sub:focus-within > .submenu {
+  display: block;
+}
+
+/* ---------- Hamburger (hidden on desktop) ---------- */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 111; /* above overlay */
+}
+
+.nav-toggle-bar {
+  width: 30px;
+  height: 3px;
+  background-color: #1A2C55;
+}
+
+/* ---------- Mobile Overlay Enhancements ---------- */
+body.nav-open { overflow: hidden; }
+
+/* Close (X) button — hidden by default */
+.nav-close {
+  display: none;
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  z-index: 112; /* above overlay */
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.nav-close:hover { color: #ff5555; }
+
+/* ---------- Responsive (mobile/tablet) ---------- */
+@media (max-width: 899px) {
+  /* default: hamburger visible, menu hidden */
+  .site-nav .menu { display: none; }
+  .nav-toggle { display: flex; }
+
+  /* show close button and hide hamburger only when menu is open */
+  body.nav-open .nav-toggle { display: none; }
+  body.nav-open .nav-close  { display: block; }
+
+  /* overlay slide + (optional) fade */
+  #nav-menu {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #nav-menu { transition: none; }
+  }
+
+  /* overlay visible when active */
+  #nav-menu.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: fixed;
+    inset: 0;                 /* top:0; right:0; bottom:0; left:0 */
+    padding: 80px 28px 32px;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 110;
+    overflow-y: auto;
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  /* top-level items in overlay */
+  .site-nav .menu > li { width: 100%; text-align: center; }
+
+  .site-nav .menu > li > a,
+  .site-nav .menu > li > .menu-parent {
+    display: block;
+    width: 100%;
+    padding: 18px 0;
+    margin: 0;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 18px;
+    background: transparent;
+    color: #ffffff;
+    transition: color 0.3s;
+  }
+
+  .site-nav .menu > li > a:hover,
+  .site-nav .menu > li > .menu-parent:hover,
+  .site-nav .menu > li > a:focus,
+  .site-nav .menu > li > .menu-parent:focus {
+    background: transparent;
+    color: #dddddd;
+    box-shadow: none;
+  }
+
+  /* remove desktop underline effect inside overlay */
+  .site-nav a.active::after,
+  .site-nav a[aria-current="page"]::after,
+  .menu-parent[aria-expanded="true"]::after { display: none; }
+
+  /* submenus inside overlay */
+  .submenu {
+    position: static;
+    border: 0;
+    border-radius: 0;
+    min-width: auto;
+    box-shadow: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+    background-color: transparent;
+    list-style: none;
+  }
+  .submenu[hidden] { display: none !important; }
+  .submenu li { list-style: none; margin: 0; padding: 0; }
+  .submenu a {
+    padding: 14px 0 14px 22px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    border-radius: 0;
+    color: #ffffff;
+  }
+
+  /* disable desktop hover-open on mobile */
+  .has-sub:hover > .submenu { display: none; }
+}
+
+/* reminder: this pairs with the small main.js snippet that updates --header-h dynamically based on .site-header height. */

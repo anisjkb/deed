@@ -1,0 +1,45 @@
+{#src/backend/templates/about_team.html#}
+{% extends "base.html" %}
+{% block content %}
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+<section class="section container team-page">
+  <h3 class="h3">Management Team</h3>
+  <p class="lead" style="max-width:900px;">
+    Our leadership blends decades of experience, design excellence, and relentless pursuit of quality.
+  </p>
+
+  <div class="cards" style="margin-top:28px;">
+    {% for emp, desig_name in team_members %}
+      <article class="card">
+        {% if emp.photo_url %}
+          <a class="card-media" href="/about-us/team/{{ emp.emp_id }}">
+            <img src="{{ emp.photo_url }}" alt="{{ emp.emp_name }}" loading="lazy">
+          </a>
+        {% endif %}
+        <div class="card-body">
+          <h3 class="h4">{{ emp.emp_name }}</h3>
+          <p class="muted">{{ desig_name or '—' }}</p>
+
+          {% if emp.bio %}
+            <p>{{ emp.bio }}</p>
+          {% endif %}
+
+          <div class="card-actions">
+            <a href="/about-us/team/{{ emp.emp_id }}" class="btn btn-outline">View Details</a>
+            {% if emp.linkedin_url %}
+              <a href="{{ emp.linkedin_url }}" target="_blank" class="btn btn-secondary">LinkedIn</a>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    {% else %}
+      <p class="muted">No management members found at this time.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/about_team.css?v={{ assetv }}">
+{% endblock %}

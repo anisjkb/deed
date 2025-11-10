@@ -1,0 +1,75 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <!-- Logo -->
+    <a class="brand" href="/" aria-label="Deed Home">
+      <img src="/static/images/deed-logo-light.svg?v={{ assetv }}" alt="DEED Logo" class="logo-img">
+    </a>
+
+  <!-- Navigation -->
+  <nav class="site-nav" aria-label="Main navigation">
+  <!-- Mobile Navigation Toggle (Hamburger Button) -->
+  <!-- Hamburger -->
+  <button class="nav-toggle" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+
+  <!-- Close (X) — start hidden -->
+  <button class="nav-close" aria-label="Close menu" hidden>×</button>
+
+  <!-- Mobile Close Button (shows only when overlay is open) -->
+  <button class="nav-close" aria-label="Close menu">×</button>
+
+  <!-- Main Menu -->
+  <ul id="nav-menu" class="menu">
+    <!-- About Dropdown -->
+    <li class="has-sub">
+      <button class="menu-parent" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">
+        About
+      </button>
+      <ul id="submenu-about" class="submenu" hidden>
+        <li><a href="/about-us">Who we are</a></li>
+        <li><a href="/about-us/team">Management Team</a></li>
+        <li><a href="/about-us/timeline">Timeline</a></li>
+        <li><a href="/royal-club">Royal Club</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </li>
+
+    <!-- Projects Dropdown -->
+    <li class="has-sub">
+      <button class="menu-parent" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-projects">
+            Projects
+      </button>
+      <ul id="submenu-projects" class="submenu" hidden>
+        <li><a href="/projects?category=ongoing">Ongoing</a></li>
+        <li><a href="/projects?category=upcoming">Upcoming</a></li>
+        <li><a href="/projects?category=completed">Completed</a></li>
+        <li><a href="/projects">All Projects</a></li>
+      </ul>
+    </li>
+
+    <!-- Blog Link -->
+    <li><a href="/blog">Blog</a></li>
+
+    <!-- Gallery Dropdown -->
+    <li class="has-sub">
+      <button class="menu-parent" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-gallery">
+            Gallery
+      </button>
+      <ul id="submenu-gallery" class="submenu" hidden>
+        <li><a href="/gallery#photos">Photos</a></li>
+        <li><a href="/gallery#videos">Videos</a></li>
+        <li><a href="/gallery#newsletter">Newsletter</a></li>
+      </ul>
+    </li>
+
+    <!-- Other Links -->
+    <li><a href="/career">Career</a></li>
+    <li><a href="/contact-us">Contact</a></li>
+    <li><a href="/associate-business">Associate Businesses</a></li>
+  </ul>
+  </nav>
+</div>
+</header>

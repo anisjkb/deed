@@ -1,0 +1,23 @@
+/* src/backend/static/css/feedback.css */
+
+.field-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  min-height: 1rem;
+}
+
+.form input:invalid,
+.form textarea:invalid {
+  outline: 2px solid rgba(192, 57, 43, 0.25);
+}
+
+.form input:valid,
+.form textarea:valid {
+  outline: 2px solid rgba(46, 204, 113, 0.35);
+}
+
+.muted.small {
+  font-size: 0.85rem;
+  color: #666;
+}

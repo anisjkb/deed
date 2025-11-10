@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-labelledby="t d">
+  <title id="t">DEED</title>
+  <desc id="d">Wordmark logo for DEED designed for dark/black backgrounds</desc>
+  <g transform="translate(8,8)">
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="none" stroke="#d1b673" stroke-width="2"/>
+    <path fill="#d1b673" fill-rule="evenodd" d="M10,8 L10,40 L24,40 A16,16 0 0 0 24,8 Z M16,16 L16,32 L24,32 A8,8 0 0 0 24,16 Z"/>
+  </g>
+  <g transform="translate(72,14)">
+    <text x="0" y="32" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+          font-size="34" font-weight="800" letter-spacing="-1" fill="#ffffff">DEED</text>
+  </g>
+</svg>

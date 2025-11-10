@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero-project">
+  <img src="{{ associatedbus.logo_url or '/static/images/project1.jpg' }}" alt="{{ associatedbus.bus_name }} hero" width="1600" height="900">
+  <div class="hero-overlay container">
+    <h1 class="h1">{{ associatedbus.bus_name }}</h1>
+    <p class="muted">{{ associatedbus.description }} </p>
+    <a class="btn btn-light" href="#schedule">Schedule a Meeting</a>
+  </div>
+</section>
+
+{% include 'partials/_schedule_meeting.html' %}
+{% endblock %}

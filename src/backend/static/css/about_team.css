@@ -1,0 +1,130 @@
+/* =========================================================
+   ABOUT TEAM PAGE — Consistent with Common Card Design
+   ========================================================= */
+
+.team-page .card {
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow); /* same depth as other cards */
+  transition: transform var(--trans-slow), box-shadow var(--trans-slow);
+}
+
+.team-page .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45); /* identical hover lift */
+  border-color: rgba(12, 124, 144, 0.35);
+}
+
+.team-page .card-media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--r-md);
+  transition: transform 0.3s ease;
+}
+
+.team-page .card-media:hover img {
+  transform: scale(1.03);
+}
+
+/* =========================================================
+   ABOUT TEAM DETAIL PAGE — Refined Portrait & Layout
+   ========================================================= */
+
+.team-detail {
+  display: block;
+  padding-block: 40px;
+}
+
+/* Portrait Card for Detail View */
+.team-detail .portrait-card,
+.team-detail .card {
+  max-width: 340px;
+  margin-inline: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform var(--trans-slow), box-shadow var(--trans-slow);
+}
+
+.team-detail .portrait-card:hover,
+.team-detail .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+  border-color: rgba(12, 124, 144, 0.35);
+}
+
+.team-detail .card-media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--r-lg);
+  transition: transform 0.3s ease;
+}
+
+.team-detail .card-media:hover img {
+  transform: scale(1.02);
+}
+
+/* Responsive grid for detail page */
+.team-detail .grid-2 {
+  display: grid;
+  gap: 40px;
+  align-items: start;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .team-detail .grid-2 {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+/* Typography and layout refinement */
+.team-detail h1.h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.team-detail p.muted {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* Bulleted info section */
+.team-detail .bullets {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 18px;
+}
+
+.team-detail .bullets li {
+  margin-bottom: 6px;
+  color: var(--muted);
+}
+
+.team-detail .bullets strong {
+  color: var(--text);
+}
+
+/* Buttons layout */
+.team-detail .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .team-detail .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+<section class="section container team-detail">
+  <a href="/about-us/team" class="btn btn-outline" style="margin-bottom:16px;">← Back to Team</a>
+
+  <div class="grid-2">
+    <!-- Portrait -->
+    <div>
+      <div class="card">
+        <div class="card-media">
+          <img
+            src="{{ emp.photo_url or '/static/images/team/placeholder.jpg' }}"
+            alt="{{ emp.emp_name }}"
+            width="600" height="750"
+            loading="lazy"
+            style="width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div>
+      <h1 class="h2" style="margin-top:0">{{ emp.emp_name }}</h1>
+      <p class="muted">{{ desig_name or '—' }}</p>
+
+      <ul class="bullets" style="margin:12px 0 16px">
+        {% if emp.email %}<li><strong>Email:</strong> {{ emp.email }}</li>{% endif %}
+        {% if emp.mobile %}<li><strong>Phone:</strong> {{ emp.mobile }}</li>{% endif %}
+        {% if emp.join_date %}<li><strong>Joined:</strong> {{ emp.join_date }}</li>{% endif %}
+        {% if emp.emp_type %}<li><strong>Type:</strong> {{ emp.emp_type.value if emp.emp_type.value is defined else emp.emp_type }}</li>{% endif %}
+      </ul>
+
+      {% if emp.bio %}
+        <h3 class="h4">About</h3>
+        <p>{{ emp.bio }}</p>
+      {% endif %}
+
+      {% if emp.bio_details %}
+        <h3 class="h4">Message</h3>
+        <p>{{ emp.bio_details }}</p>
+      {% endif %}
+
+      <div class="card-actions" style="margin-top:16px">
+        <a href="/meetings" class="btn">Schedule a Meeting</a>
+        {% if emp.linkedin_url %}
+          <a href="{{ emp.linkedin_url }}" target="_blank" class="btn btn-secondary">LinkedIn</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
