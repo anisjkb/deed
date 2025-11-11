@@ -25,7 +25,9 @@
   <link rel="stylesheet" href="/static/css/header.css?v={{ assetv }}" />
   {# If you want banner CSS globally on all pages, uncomment below and remove it from _banner.html #}
   {# <link rel="stylesheet" href="/static/css/banner.css?v={{ assetv }}" /> #}
-
+  <!-- This is where the extra CSS from child templates will be injected -->
+  {% block extra_css %}
+  {% endblock %}
   <!-- Core JS (deferred) -->
   <script defer src="/static/js/nav.js?v={{ assetv }}"></script>
   <script defer src="/static/js/main.js?v={{ assetv }}"></script>

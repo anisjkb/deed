@@ -1,130 +1,163 @@
-/* =========================================================
-   ABOUT TEAM PAGE — Consistent with Common Card Design
-   ========================================================= */
+/* ===============================================
+   TEAM PAGE + PROFESSIONAL ID BADGE INTEGRATION
+   =============================================== */
 
+.team-page .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;  /* Reduced gap between the cards */
+  justify-items: start;  /* Left-aligns the cards */
+}
+
+/* === Core Card Styling === */
 .team-page .card {
   overflow: hidden;
-  border-radius: var(--r-lg);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow); /* same depth as other cards */
-  transition: transform var(--trans-slow), box-shadow var(--trans-slow);
+  border-radius: 15px;
+  background: #fff;  /* Set a white background for the card */
+  border: 1px solid #ccc;  /* Light grey border */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 320px;  /* Set maximum width for consistency */
+  width: 100%;
 }
 
 .team-page .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45); /* identical hover lift */
-  border-color: rgba(12, 124, 144, 0.35);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  border-color: rgba(12, 124, 144, 0.35);  /* Accent border color on hover */
 }
 
-.team-page .card-media img {
+/* === ID CARD STRUCTURE === */
+.id-card {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: var(--r-md);
-  transition: transform 0.3s ease;
-}
-
-.team-page .card-media:hover img {
-  transform: scale(1.03);
-}
-
-/* =========================================================
-   ABOUT TEAM DETAIL PAGE — Refined Portrait & Layout
-   ========================================================= */
-
-.team-detail {
-  display: block;
-  padding-block: 40px;
-}
-
-/* Portrait Card for Detail View */
-.team-detail .portrait-card,
-.team-detail .card {
-  max-width: 340px;
-  margin-inline: auto;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow);
+  text-align: center;
+  background-color: #fff;
+  border-radius: 15px;
   overflow: hidden;
-  transition: transform var(--trans-slow), box-shadow var(--trans-slow);
+  font-family: 'Arial', sans-serif;
 }
 
-.team-detail .portrait-card:hover,
-.team-detail .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
-  border-color: rgba(12, 124, 144, 0.35);
+.id-card-header {
+  background-color: #225A7A;  /* Light grey background for header */
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;  /* Border between header and body */
 }
 
-.team-detail .card-media img {
+/* Square Image Holder with Rounded Corners */
+.photo-placeholder {
+  background-color: #e0e0e0;
+  width: 150px;  /* Square shape */
+  height: 180px;  /* Square shape */
+  border-radius: 10px;  /* Rounded corners */
+  margin: 0 auto;
+  overflow: hidden;
+  border: 5px solid white;
+}
+
+.photo-placeholder img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
-  object-position: top center;
-  border-radius: var(--r-lg);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease;  /* Adds smooth zoom effect */
 }
 
-.team-detail .card-media:hover img {
-  transform: scale(1.02);
+.id-card-header:hover .photo-placeholder img {
+  transform: scale(1.05);  /* Slight zoom effect on hover */
 }
 
-/* Responsive grid for detail page */
-.team-detail .grid-2 {
-  display: grid;
-  gap: 40px;
-  align-items: start;
-  grid-template-columns: 1fr;
+.id-card-body {
+  padding: 20px;
 }
 
-@media (min-width: 900px) {
-  .team-detail .grid-2 {
-    grid-template-columns: 0.8fr 1.2fr;
-  }
-}
-
-/* Typography and layout refinement */
-.team-detail h1.h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
-.team-detail p.muted {
-  margin-bottom: 20px;
-  font-weight: 500;
-  color: var(--muted);
-}
-
-/* Bulleted info section */
-.team-detail .bullets {
-  list-style: none;
-  padding: 0;
-  margin: 14px 0 18px;
-}
-
-.team-detail .bullets li {
+.id-card-body .name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 6px;
-  color: var(--muted);
 }
 
-.team-detail .bullets strong {
-  color: var(--text);
+.id-card-body .employee-id,
+.id-card-body .blood-group,
+.id-card-body .muted {
+  font-size: 14px;
+  color: #666;
+  margin: 3px 0;
 }
 
-/* Buttons layout */
-.team-detail .card-actions {
+/* === Footer Styling === */
+.id-card-footer {
+  background-color: #225A7A;  /* Light grey background for footer */
+  color: white;
+  padding: 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  position: relative;
+}
+
+.footer-curve {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #ffcc00;
+  clip-path: ellipse(50% 20% at 50% 100%);
+}
+
+.company-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color:#333;
+}
+
+/* === Action Buttons === */
+.card-actions {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
-@media (max-width: 600px) {
-  .team-detail .card-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.card-actions .btn {
+  font-size: 14px;
+  padding: 8px 12px;
+  transition: background-color 0.3s ease;
+  background-color: #0077b5;  /* LinkedIn-like blue background */
+  color: white;
+  border: 1px solid #0077b5;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.card-actions .btn:hover {
+  background-color: #005a8b;  /* Darker blue on hover */
+  color: white;
+  border-color: #005a8b;  /* Darker border on hover */
+}
+
+.card-actions .btn-outline {
+  background-color: transparent;
+  color: #0077b5;
+  border: 1px solid #0077b5;
+}
+
+.card-actions .btn-outline:hover {
+  background-color: #f4f7fb;  /* Light background on hover */
+  color: #005a8b;
+}
+
+/* Smooth hover effect for the entire card */
+.team-page .card:hover .photo-placeholder img {
+  transform: scale(1.1);
+}
+
+.team-page .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.team-page .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

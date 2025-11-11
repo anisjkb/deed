@@ -50,6 +50,7 @@ app = FastAPI(title=settings.APP_NAME, debug=settings.DEBUG)
 # ───────────────────────────────────────────────
 # DB connection check (ping) on startup
 # ───────────────────────────────────────────────
+"""
 @app.on_event("startup")
 async def startup_probe():
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -66,7 +67,7 @@ async def startup_probe():
         print("       ", ex)
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
-
+"""
 # ───────────────────────────────────────────────
 # Session middleware (CSRF support)
 # ───────────────────────────────────────────────

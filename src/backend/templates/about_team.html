@@ -1,4 +1,4 @@
-{#src/backend/templates/about_team.html#}
+{# src/backend/templates/about_team.html #}
 {% extends "base.html" %}
 {% block content %}
 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -11,20 +11,26 @@
 
   <div class="cards" style="margin-top:28px;">
     {% for emp, desig_name in team_members %}
-      <article class="card">
-        {% if emp.photo_url %}
-          <a class="card-media" href="/about-us/team/{{ emp.emp_id }}">
-            <img src="{{ emp.photo_url }}" alt="{{ emp.emp_name }}" loading="lazy">
-          </a>
-        {% endif %}
-        <div class="card-body">
-          <h3 class="h4">{{ emp.emp_name }}</h3>
+      <article class="card id-card">
+        <div class="id-card-header">
+          <div class="photo-placeholder">
+            {% if emp.photo_url %}
+              <img src="{{ emp.photo_url }}" alt="{{ emp.emp_name }}" loading="lazy">
+            {% else %}
+              <img src="/static/images/profile-placeholder.png" alt="Profile Photo">
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="id-card-body">
+          <h2 class="name">{{ emp.emp_name }}</h2>
           <p class="muted">{{ desig_name or '—' }}</p>
+          <p class="employee-id">Email: {{ emp.email }}</p>
+          <p class="blood-group">About: {{ emp.bio }}</p>
+        </div>
 
-          {% if emp.bio %}
-            <p>{{ emp.bio }}</p>
-          {% endif %}
-
+        <div class="id-card-footer">
+          <div class="footer-curve"></div>
           <div class="card-actions">
             <a href="/about-us/team/{{ emp.emp_id }}" class="btn btn-outline">View Details</a>
             {% if emp.linkedin_url %}
