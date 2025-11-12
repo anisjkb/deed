@@ -2,15 +2,19 @@
    TEAM PAGE + PROFESSIONAL ID BADGE INTEGRATION
    =============================================== */
 
+/* Use flexbox for better gap control across all screen sizes */
 .team-page .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;  /* Reduced gap between the cards */
-  justify-items: start;  /* Left-aligns the cards */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;  /* Set a consistent gap */
+  justify-content: left;  /* Ensure cards are spaced evenly */
+  margin-top: 28px; /* Keep the same margin top */
+  padding: 0; /* Remove any extra padding */
 }
 
 /* === Core Card Styling === */
 .team-page .card {
+  width: 48%;  /* Use a percentage to adjust card width dynamically */
   overflow: hidden;
   border-radius: 15px;
   background: #fff;  /* Set a white background for the card */
@@ -18,7 +22,6 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   max-width: 320px;  /* Set maximum width for consistency */
-  width: 100%;
 }
 
 .team-page .card:hover {
@@ -47,7 +50,7 @@
 .photo-placeholder {
   background-color: #e0e0e0;
   width: 150px;  /* Square shape */
-  height: 180px;  /* Square shape */
+  height: 160px;  /* Adjusted to be consistent in height */
   border-radius: 10px;  /* Rounded corners */
   margin: 0 auto;
   overflow: hidden;
@@ -57,7 +60,7 @@
 .photo-placeholder img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   transition: transform 0.3s ease;  /* Adds smooth zoom effect */
 }
 
@@ -73,11 +76,33 @@
   font-size: 20px;
   font-weight: bold;
   color: #333;
+  margin-top: auto;
   margin-bottom: 6px;
+  text-align: center;
 }
 
-.id-card-body .employee-id,
-.id-card-body .blood-group,
+.id-card-body .designation {
+  font-size: 14px;
+  color: #666;
+  margin: 3px 0;
+  text-align: left;
+  font-weight: bold;
+}
+
+.id-card-body .employee-id{
+  text-align: left;
+  font-size: 14px;
+  color: #666;
+  margin: 3px 0;
+}
+/* Left align email and bio */
+.id-card-body .employee-bio {
+  text-align: left;
+  font-size: 14px;
+  color: #666;
+  margin: 3px 0;
+}
+
 .id-card-body .muted {
   font-size: 14px;
   color: #666;
@@ -104,20 +129,13 @@
   clip-path: ellipse(50% 20% at 50% 100%);
 }
 
-.company-name {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color:#333;
-}
-
 /* === Action Buttons === */
 .card-actions {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 5px; /*10px*/
 }
 
 .card-actions .btn {

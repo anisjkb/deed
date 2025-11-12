@@ -17,22 +17,21 @@
             {% if emp.photo_url %}
               <img src="{{ emp.photo_url }}" alt="{{ emp.emp_name }}" loading="lazy">
             {% else %}
-              <img src="/static/images/profile-placeholder.png" alt="Profile Photo">
+              <img src="/static/images/team/profile-placeholder.png" alt="Profile Photo">
             {% endif %}
           </div>
         </div>
 
         <div class="id-card-body">
-          <h2 class="name">{{ emp.emp_name }}</h2>
-          <p class="muted">{{ desig_name or '—' }}</p>
-          <p class="employee-id">Email: {{ emp.email }}</p>
-          <p class="blood-group">About: {{ emp.bio }}</p>
+          <p class="name">{{ emp.emp_name }}</p>
+          <p class="designation">{{ desig_name or '—' }}</p>
+          <p class="employee-id"><strong>Email:</strong> {{ emp.email }}</p>
+          <p class="employee-bio"><strong>Message:</strong> {{ emp.bio }}</p>
         </div>
 
         <div class="id-card-footer">
-          <div class="footer-curve"></div>
           <div class="card-actions">
-            <a href="/about-us/team/{{ emp.emp_id }}" class="btn btn-outline">View Details</a>
+            <a href="/about-us/team/{{ emp.emp_id }}" class="btn btn-secondary">View Details</a>
             {% if emp.linkedin_url %}
               <a href="{{ emp.linkedin_url }}" target="_blank" class="btn btn-secondary">LinkedIn</a>
             {% endif %}
