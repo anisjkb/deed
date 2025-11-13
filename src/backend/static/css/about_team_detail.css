@@ -7,25 +7,34 @@
   border-radius: var(--r-lg); /* Rounded corners for the border */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Soft shadow around the container */
   margin: 20px auto; /* Added margin of 20px on all sides and auto-centering */
+  max-width: 1200px; /* Maximum width to ensure the container doesn't stretch too wide */
 }
 
 /* Layout for Grid */
 .grid-team-detail {
   display: grid;
-  grid-template-columns: 300px 1fr;  /* Image column with 130px width, and text column takes the remaining space */
+  grid-template-columns: 1fr;  /* Stacked layout by default (for small screens) */
   gap: 16px; /* Reduced gap between the image and text section */
   margin-bottom: 32px;
 }
 
+@media (min-width: 900px) {
+  .grid-team-detail {
+    grid-template-columns: 200px 1fr;  /* Image column with 200px width, and text column takes the remaining space */
+  }
+}
+
 /* Portrait Image */
 .team-details-card-media img {
-  width: 300px;  /* Fixed width for image */
-  height: 340px; /* Fixed height for image */
-  object-fit: fill;  /* Ensure image fits within the square area */
-  border-radius: 10%;
+  width: 100%;  /* Make image responsive and fill the container */
+  max-width: 300px; /* Limit the max-width for larger screens */
+  height: auto;  /* Automatically adjust height */
+  object-fit: cover;  /* Ensure the image covers the area */
+  border-radius: 10%;  /* Rounded corners */
   transition: all 0.3s ease; /* Smooth hover effect */
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for the image */
-  margin: 20px;
+  margin-bottom: 20px;  /* Adds spacing between image and text */
+  margin-left: 20px;
 }
 
 /* Hover effect for the image */
@@ -33,18 +42,19 @@
   transform: scale(1.05);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
 }
+
 /* Text Details */
 .team-details-text {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 3px;
   margin-left: 20px;
   margin-right: 20px;
 }
 
 /* Name and Designation */
-h1.h2 {
+h2.h2 {
   font-size: 32px;
   font-weight: 700;
   color: var(--brand-teal);  /* Accent color for the name */
@@ -92,30 +102,52 @@ p {
 /* Action Buttons */
 .card-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 16px;
 }
 
+/* Primary Button */
 .card-actions .btn {
   background: var(--brand-teal);
   color: var(--text-light);
   border: none;
   border-radius: var(--r-md);
-  padding: 10px 16px;
+  padding: 12px 24px;
   font-weight: 700;
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
+/* Hover effect for primary button */
 .card-actions .btn:hover {
   background-color: #0077b5;
 }
 
+/* Secondary Button */
 .card-actions .btn-secondary {
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
+  padding: 12px 24px;
 }
 
 .card-actions .btn-secondary:hover {
   background-color: #005a8b;
+}
+
+/* Back Button */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--brand-teal);
+  color: var(--brand-teal);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(12, 124, 144, 0.1); /* Subtle hover effect */
+  color: var(--brand-teal);
 }
