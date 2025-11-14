@@ -18,6 +18,12 @@
   margin-bottom: 32px;
 }
 
+@media (min-width: 900px) {
+  .grid-team-detail {
+    grid-template-columns: 200px 1fr;  /* Image column with 200px width, and text column takes the remaining space */
+  }
+}
+
 /* Portrait Image */
 .team-details-card-media img {
   width: 100%;  /* Make image responsive and fill the container */
@@ -29,7 +35,6 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for the image */
   margin-bottom: 20px;  /* Adds spacing between image and text */
   margin-left: 20px;
-  margin-right: 20px;
 }
 
 /* Hover effect for the image */
@@ -145,21 +150,4 @@ p {
 .btn-outline:hover {
   background-color: rgba(12, 124, 144, 0.1); /* Subtle hover effect */
   color: var(--brand-teal);
-}
-
-/* Responsive Adjustments for Larger Screens */
-@media (min-width: 900px) {
-  .grid-team-detail {
-    grid-template-columns: 200px 1fr;  /* Image column with 200px width, and text column takes the remaining space */
-  }
-
-  .team-details-card-media img {
-    width: 100%;
-    max-width: 200px; /* Limit the max-width for the image */
-  }
-
-  /* Optional: Adjust text spacing or any other design element for large screens */
-  .team-details-text {
-    margin-left: 30px; /* Increased margin for larger screen for more space */
-  }
 }
