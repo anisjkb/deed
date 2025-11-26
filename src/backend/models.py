@@ -43,6 +43,7 @@ class Banner(Base):
     cta_url: Mapped[Optional[str]] = mapped_column(String(300), default=None)
     sort_order: Mapped[int] = mapped_column(Integer, default=0)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    published: Mapped[str] = mapped_column(String(3), default='Yes')
 
 class Project(Base):
     __tablename__ = "projects"
@@ -71,6 +72,7 @@ class Project(Base):
     progress_pct: Mapped[int] = mapped_column(Integer, default=0)
 
     highlights: Mapped[Optional[str]] = mapped_column(Text, default=None)
+    published: Mapped[str] = mapped_column(String(3), default='Yes')
 
 class Award(Base):
     __tablename__ = "awards"
@@ -81,6 +83,7 @@ class Award(Base):
     year: Mapped[Optional[int]] = mapped_column(Integer, default=None)
     description: Mapped[Optional[str]] = mapped_column(String(400), default=None)
     image_url: Mapped[Optional[str]] = mapped_column(String(500), default=None)
+    published: Mapped[str] = mapped_column(String(3), default='Yes')
 
 class Testimonial(Base):
     __tablename__ = "testimonials"
@@ -143,6 +146,7 @@ class AssociateBusiness(Base):
         server_default=func.now(),
         onupdate=func.now()
     )
+    published: Mapped[str] = mapped_column(String(3), default='Yes')
 
 class OrgInfo(Base):
     __tablename__ = "org_info"

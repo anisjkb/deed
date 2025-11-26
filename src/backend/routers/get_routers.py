@@ -51,18 +51,18 @@ def render_template(
 # ──────────────────────────────────────────────────────────────
 @router.get("/", response_class=HTMLResponse)
 async def home(request: Request, session: AsyncSession = Depends(get_session)):
-    banners = featured_projects = testimonials = associated_business = []
+    banners = featured_projects = testimonials  = []
     try:
         banners = (
             await session.execute(
-                select(Banner).where(Banner.is_active == True).order_by(Banner.sort_order)
+                select(Banner).where(Banner.published == 'Yes').order_by(Banner.sort_order)
             )
         ).scalars().all()
     except SQLAlchemyError as e:
         log.warning("Home: banners query failed: %s", e)
 
     try:
-        featured_projects = (await session.execute(select(Project).order_by(Project.title))).scalars().all()
+        featured_projects = (await session.execute(select(Project).where(Project.published == 'Yes').order_by(Project.title))).scalars().all()
     except SQLAlchemyError as e:
         log.warning("Home: projects query failed: %s", e)
 
@@ -74,13 +74,6 @@ async def home(request: Request, session: AsyncSession = Depends(get_session)):
     except SQLAlchemyError as e:
         log.warning("Home: testimonials query failed: %s", e)
 
-    try:
-        associated_business = (
-            await session.execute(select(AssociateBusiness).order_by(AssociateBusiness.bus_name))
-        ).scalars().all()
-    except SQLAlchemyError as e:
-        log.warning("Home: associate_business query failed: %s", e)
-
     return render_template(
         request,
         "index.html",
@@ -90,7 +83,7 @@ async def home(request: Request, session: AsyncSession = Depends(get_session)):
             "banners": banners,
             "featured_projects": featured_projects,
             "testimonials": testimonials,
-            "associated_business": associated_business,
+            #"associated_business": associated_business,
         }
     )
 
