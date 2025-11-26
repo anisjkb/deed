@@ -204,3 +204,4 @@ class EmpInfo(Base):
     bio_details: Mapped[Optional[str]] = mapped_column(Text, default=None)
 
     designation = relationship("DesigInfo", back_populates="employees")
+    published: Mapped[str] = mapped_column(String(3), default='Yes')

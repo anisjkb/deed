@@ -16,18 +16,24 @@ async def projects_index(
     type: str | None = None,
     location: str | None = None,
 ):
-    q = select(Project)
+    # Start the query for all projects
+    q = select(Project).where(Project.published == 'Yes')  # Only include projects with published == 'Yes'
+    
+    # Apply additional filters if provided
     if category in {"ongoing", "upcoming", "completed"}:
-        # status is a VARCHAR column; compare to string
+        # Filter by project status
         q = q.where(Project.status == category)
     if type in {"residential", "commercial"}:
-        # ptype is an enum; bind via ProjectType
+        # Filter by project type (enum)
         q = q.where(Project.ptype == ProjectType(type))
     if location:
+        # Filter by location
         q = q.where(Project.location.ilike(f"%{location}%"))
 
+    # Execute the query with sorting by title
     projects = (await session.execute(q.order_by(Project.title))).scalars().all()
 
+    # Return the filtered list of projects to the template
     return request.app.state.templates.TemplateResponse(
         "projects/index.html",
         {
@@ -48,13 +54,18 @@ async def project_detail(
     request: Request,
     session: AsyncSession = Depends(get_session),
 ):
+    # Fetch a specific project by slug with the condition that it's published
     project = (
-        await session.execute(select(Project).where(Project.slug == slug))
+        await session.execute(
+            select(Project).where(Project.slug == slug, Project.published == 'Yes')
+        )
     ).scalars().first()
 
+    # If the project is not found, raise a 404 error
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
+    # Return the project details to the template
     return request.app.state.templates.TemplateResponse(
         "projects/detail.html",
         {

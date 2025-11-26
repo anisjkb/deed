@@ -83,7 +83,6 @@ async def home(request: Request, session: AsyncSession = Depends(get_session)):
             "banners": banners,
             "featured_projects": featured_projects,
             "testimonials": testimonials,
-            #"associated_business": associated_business,
         }
     )
 
@@ -107,7 +106,8 @@ async def about_team(request: Request, session: AsyncSession = Depends(get_sessi
             select(EmpInfo, DesigInfo.desig_name.label("desig_name"))
             .join(DesigInfo, EmpInfo.desig_id == DesigInfo.desig_id, isouter=True)
             .where(
-                cast(EmpInfo.emp_type, String).in_(["Management", "Board Member"])
+                cast(EmpInfo.emp_type, String).in_(["Management", "Board Member"]),
+                EmpInfo.published == 'Yes'  # Add the filter for published == 'Yes'
             )
             .order_by(EmpInfo.sort_order.nulls_last(), EmpInfo.emp_name)
         )

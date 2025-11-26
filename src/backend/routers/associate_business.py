@@ -1,5 +1,4 @@
 # src/backend/routers/associate_business.py
-
 from fastapi import APIRouter, Depends, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,14 +14,14 @@ async def associate_bussiness_index(
     request: Request,
     session: AsyncSession = Depends(get_session)
 ):
-    # Create a query to fetch businesses
-    q = select(AssociateBusiness)
+    # Create a query to fetch businesses with published == 'Yes'
+    q = select(AssociateBusiness).where(AssociateBusiness.published == 'Yes')
     
     # Execute the query and fetch all the businesses
     allbusiness = (await session.execute(q.order_by(AssociateBusiness.bus_name))).scalars().all()
 
     # Log the number of businesses fetched
-    #logging.info(f"Found {len(allbusiness)} businesses")
+    logging.info(f"Found {len(allbusiness)} businesses")
 
     # Pass allbusiness to the template as context
     return request.app.state.templates.TemplateResponse(
@@ -34,14 +33,15 @@ async def associate_bussiness_index(
             "awards": request.state.awards,  # <-- from middleware
         },
     )
+
 @router.get("/associate-businesses/{bus_id}", response_class=HTMLResponse)
 async def associate_business_detail(    
     request: Request,
     bus_id: int,
     session: AsyncSession = Depends(get_session)
 ):
-    # Create a query to fetch the business by slug
-    q = select(AssociateBusiness).where(AssociateBusiness.bus_id == bus_id)
+    # Create a query to fetch the business by bus_id and ensure it is published
+    q = select(AssociateBusiness).where(AssociateBusiness.bus_id == bus_id, AssociateBusiness.published == 'Yes')
     
     # Execute the query and fetch the business
     associatedbus = (await session.execute(q)).scalars().first()
