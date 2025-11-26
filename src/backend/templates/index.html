@@ -30,8 +30,14 @@
       <div class="testimonials" data-autoplay="7000">
         {% for t in testimonials %}
         <figure class="t-card">
-          <blockquote>“{{ t.quote }}”</blockquote>
-          <figcaption><strong>{{ t.name }}</strong> — {{ t.role or '' }}{% if t.project %}, {{ t.project }}{% endif %}</figcaption>
+          <blockquote style="color:green;font-style: italic; font-weight: 500;">“{{ t.quote }}”</blockquote>
+          <figcaption>
+            <strong>{{ t.name }}</strong> — 
+            {{ t.role or '' }}
+            {% if t.project_title %}
+             <div style="color:#0C14B3; font-weight: 500;">{{ t.project_title }}</div>
+            {% endif %}
+          </figcaption>
         </figure>
         {% endfor %}
       </div>

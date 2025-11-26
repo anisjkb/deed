@@ -88,10 +88,11 @@ class Testimonial(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(120))
     role: Mapped[Optional[str]] = mapped_column(String(120), default=None)
-    project: Mapped[Optional[str]] = mapped_column(String(160), default=None)
+    project_title: Mapped[Optional[str]] = mapped_column(String(160), default=None)
     quote: Mapped[str] = mapped_column(Text)
     video_url: Mapped[Optional[str]] = mapped_column(String(500), default=None)
     sort_order: Mapped[int] = mapped_column(Integer, default=0)
+    published: Mapped[str] = mapped_column(String(3), default='Yes')
 
 class MeetingRequest(Base):
     __tablename__ = "meeting_requests"

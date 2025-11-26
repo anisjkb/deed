@@ -67,7 +67,10 @@ async def home(request: Request, session: AsyncSession = Depends(get_session)):
         log.warning("Home: projects query failed: %s", e)
 
     try:
-        testimonials = (await session.execute(select(Testimonial).order_by(Testimonial.sort_order))).scalars().all()
+        # Fetch testimonials with published = 'Yes'
+        testimonials = (
+            await session.execute(select(Testimonial).where(Testimonial.published == 'Yes').order_by(Testimonial.sort_order))
+        ).scalars().all()
     except SQLAlchemyError as e:
         log.warning("Home: testimonials query failed: %s", e)
 
