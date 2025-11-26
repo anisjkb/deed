@@ -6,7 +6,7 @@
 .team-page .cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;  /* Set a consistent gap */
+  gap: 70px;  /* Set a consistent gap */
   justify-content: left;  /* Ensure cards are spaced evenly */
   margin-top: 28px; /* Keep the same margin top */
   padding: 0; /* Remove any extra padding */
