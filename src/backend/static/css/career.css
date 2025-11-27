@@ -1,0 +1,65 @@
+/* /static/css/career.css */
+
+/* Career Page Responsive Layout */
+.career-grid {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* LEFT CARD */
+.career-left {
+  flex: 1;
+  min-width: 300px;
+  height: 320px;
+  padding: 40px;
+  color: white;
+  text-align: center;
+  border-radius: 20px;
+
+  background-image: url('/static/images/meeting/career2.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.career-left .btn {
+  margin-top: -20px;
+}
+
+/* Removing bullets and aligning text to the left */
+.bullets {
+  list-style-type: none; /* Removes the bullets */
+  padding-left: 0; /* Removes any padding on the left */
+  text-align: left; /* Aligns the text to the left */
+}
+
+.bullets li {
+  margin-bottom: 10px; /* Optional: Adds some space between each list item */
+}
+
+/* RIGHT PANEL */
+.career-right {
+  flex: 1;
+  min-width: 280px;
+  padding: 20px 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .career-grid {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .career-right {
+    padding: 20px;
+    text-align: center;
+  }
+}

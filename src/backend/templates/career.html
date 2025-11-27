@@ -1,33 +1,35 @@
 {% extends "base.html" %}
-
 {% block content %}
+
 <section class="section container">
   <h1 class="h1">Career</h1>
   <p class="lead">Join a team that values innovation, integrity, and delivery.</p>
 
-  <div class="grid-2" style="display: flex; justify-content: space-between; align-items: center;">
-    <!-- Left side: Career information (titles, details, etc.) -->
-    <div class="career-left" style="background-image: url('/static/images/meeting/career.png'); background-size: cover; background-position: center; padding: 40px; color: white; text-align: center; flex: 1; height: 400px; border-radius: 20px;">
+  <div class="career-grid">
+
+    <!-- LEFT SIDE -->
+    <div class="career-left">
       <h2>Current Openings</h2>
-      <ul class="bullets" style="list-style-type: none; padding: 0;">
+      <ul class="bullets">
         <li>Project Manager</li>
         <li>Architect</li>
         <li>Sales Executive</li>
         <li>Engineer</li>
         <li>Others</li>
       </ul>
-      <div class="container" style="text-align:center; max-width:800px;">
-        <a href="/contact-us" class="btn btn-light" style="margin-top:16px;">Contact with us</a>
-      </div>
+      <a href="/contact-us" class="btn btn-light">Contact with us</a>
     </div>
 
-  <!-- Right side: Contact form or other information -->
-<div class="career-right" style="flex: 1; padding: 20px 40px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; height: 400px;">
-  <h2 style="margin-top: 0;">How to Apply</h2>
-  <p>If you're interested in any of the positions, please fill out the form below, and we will get in touch with you.</p>
-</div>
+    <!-- RIGHT SIDE -->
+    <div class="career-right">
+      <h2>How to Apply</h2>
+      <p>If you're interested in any of these positions, please fill out the form below, and we will get in touch with you.</p>
+    </div>
 
-  
   </div>
 </section>
+
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/career.css?v={{ assetv }}" />
 {% endblock %}
