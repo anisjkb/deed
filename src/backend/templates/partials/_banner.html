@@ -7,14 +7,48 @@
               role="group"
               aria-label="Slide {{ loop.index }} of {{ banners|length }}"
               aria-hidden="{{ 'false' if loop.first else 'true' }}">
+
+        {# ──────────────────────────────────────────────────────────────
+           AVIF-first banner with robust fallbacks (no width-variants)
+           - DB now stores .avif paths (e.g., /images/banners/banners1.avif)
+           - <source> serves AVIF to supported browsers
+           - <img> uses the same URL but includes a JS fallback chain:
+               .avif → .webp → .jpg → .png → /static/images/banners/fallback.png
+           - No database changes required
+           - Keep a fallback.png at /static/images/banners/fallback.png
+           - Cache-busted via ?v={{ assetv }}
+           ────────────────────────────────────────────────────────────── #}
+
+        {% set dot = b.image_url.rfind('.') %}
+        {% set ext = (b.image_url[dot+1:] if dot != -1 else 'avif')|lower %}
+        {% set base = (b.image_url[:dot] if dot != -1 else b.image_url) %}
+
         <picture>
-          <source srcset="{{ b.image_url }}" media="(min-width: 1024px)">
+          {# Serve AVIF to capable browsers #}
+          <source type="image/avif" srcset="{{ base }}.avif?v={{ assetv }}" sizes="100vw">
+
+          {# If you also export WebP, uncomment this line; otherwise leave it out to avoid 404s
+          <source type="image/webp" srcset="{{ base }}.webp?v={{ assetv }}" sizes="100vw">
+          #}
+
+          {# Fallback <img> — start with AVIF (works on modern browsers),
+             then JS onerror tries .webp → .jpg → .png → final fallback. #}
           <img
-            src="{{ b.image_url }}"
+            src="{{ base }}.avif?v={{ assetv }}"
             alt="{{ b.headline or 'Banner' }}"
             width="1600" height="900"
+            style="aspect-ratio:16/9;object-fit:cover;width:100%;height:auto;"
             {% if loop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
-            decoding="async">
+            decoding="async"
+            onerror="
+              if(this.dataset.fstep===undefined){ this.dataset.fstep='avif'; }
+              const u=new URL(this.src, window.location.origin);
+              const step=this.dataset.fstep;
+              if(step==='avif'){ u.pathname=u.pathname.replace(/\.avif$/i,'.webp'); this.dataset.fstep='webp'; this.src=u.toString(); }
+              else if(step==='webp'){ u.pathname=u.pathname.replace(/\.webp$/i,'.jpg'); this.dataset.fstep='jpg'; this.src=u.toString(); }
+              else if(step==='jpg'){ u.pathname=u.pathname.replace(/\.jpe?g$/i,'.png'); this.dataset.fstep='png'; this.src=u.toString(); }
+              else { this.onerror=null; this.src='/static/images/banners/fallback.png?v={{ assetv }}'; }
+            ">
         </picture>
 
         {# FULL-WIDTH overlay (gradient); content constrained inside #}

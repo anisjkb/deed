@@ -1,6 +1,8 @@
 # src/backend/app.py
 import os
+import mimetypes
 from datetime import datetime, timedelta
+
 import pytz
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -22,6 +24,12 @@ from src.utility.csrf import add_csrf, set_csrf_cookie
 from dotenv import load_dotenv
 
 # ───────────────────────────────────────────────
+# Ensure AVIF is served with the correct Content-Type
+# ───────────────────────────────────────────────
+# Some environments (esp. Windows) don't know .avif by default.
+mimetypes.add_type("image/avif", ".avif")
+
+# ───────────────────────────────────────────────
 # Load environment + timezone
 # ───────────────────────────────────────────────
 load_dotenv()
@@ -36,6 +44,7 @@ class ImmutableStaticFiles(StaticFiles):
     async def get_response(self, path, scope):
         resp = await super().get_response(path, scope)
         if 200 <= resp.status_code < 300:
+            # Long-lived, immutable cache for static assets
             resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
         else:
             resp.headers["Cache-Control"] = "no-store"
@@ -48,7 +57,7 @@ class ImmutableStaticFiles(StaticFiles):
 app = FastAPI(title=settings.APP_NAME, debug=settings.DEBUG)
 
 # ───────────────────────────────────────────────
-# DB connection check (ping) on startup
+# DB connection check (ping) on startup (optional)
 # ───────────────────────────────────────────────
 """
 @app.on_event("startup")
@@ -66,8 +75,8 @@ async def startup_probe():
         print("[BOOT] ❌ Database connection FAILED:")
         print("       ", ex)
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-
 """
+
 # ───────────────────────────────────────────────
 # Session middleware (CSRF support)
 # ───────────────────────────────────────────────
@@ -100,7 +109,6 @@ async def add_csrf_token(request: Request, call_next):
 
     return response
 
-
 # ───────────────────────────────────────────────
 # Templates setup
 # ───────────────────────────────────────────────
@@ -111,9 +119,16 @@ app.state.templates = templates
 # ───────────────────────────────────────────────
 # Static + middleware + routers
 # ───────────────────────────────────────────────
+# /static/** → src/backend/static
 app.mount("/static", ImmutableStaticFiles(directory="src/backend/static"), name="static")
+
+# /images/** → src/backend/static/images  (alias for legacy/data-driven paths)
+app.mount("/images", ImmutableStaticFiles(directory="src/backend/static/images"), name="images")
+
+# Custom middleware
 app.add_middleware(AwardsContextMiddleware)
 
+# Routers
 app.include_router(get_routers.router)
 app.include_router(post_routers.router)
 app.include_router(projects.router)
