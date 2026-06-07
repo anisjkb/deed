@@ -71,9 +71,7 @@ uvicorn src.backend.app:app --reload
 
 Visit:
 
-```text
 [https://deedpl.com/]
-```
 
 ## Suggested Screenshots
 
