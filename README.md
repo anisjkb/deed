@@ -72,7 +72,7 @@ uvicorn src.backend.app:app --reload
 Visit:
 
 ```text
-https://deedpl.com/
+[https://deedpl.com/]
 ```
 
 ## Suggested Screenshots
