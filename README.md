@@ -1,55 +1,99 @@
-# deed_edison_clone
+# Deed Real Estate Platform
 
-A FastAPI + Jinja2 + SQLAlchemy (async) full-stack template that mirrors the IA/UX of edisonrealestatebd.com (menu structure, sections, forms) with original code and placeholder content.
+Deed is a production-ready real estate web platform built with FastAPI, PostgreSQL, SQLAlchemy, Jinja2, and deployed on Ubuntu VPS using Nginx and Gunicorn.
 
-## Run
+## Project Overview
+
+This project is designed for a real estate company to showcase projects, project details, banners, awards, business information, and customer-facing content through a fast and scalable web application.
+
+## Key Features
+
+* FastAPI backend
+* PostgreSQL database
+* SQLAlchemy ORM
+* Jinja2 server-side templates
+* Dynamic project listing
+* Project detail pages
+* Banner and award display
+* Static image and media handling
+* Contact and information pages
+* Production deployment on Ubuntu VPS
+* Nginx reverse proxy
+* Gunicorn + Uvicorn workers
+* SSL-enabled domain deployment
+
+## Tech Stack
+
+* Python
+* FastAPI
+* PostgreSQL
+* SQLAlchemy
+* Jinja2
+* HTML
+* CSS
+* JavaScript
+* Nginx
+* Gunicorn
+* Uvicorn
+* Ubuntu VPS
+
+## Production Deployment
+
+The application is deployed on a Linux VPS using this architecture:
+
+```text
+Nginx → Gunicorn → Uvicorn → FastAPI → PostgreSQL
+```
+
+## Local Setup
+
 ```bash
-python -m venv .venv
-# Windows
-. .venv\Scripts\activate
-# macOS/Linux
-# source .venv/bin/activate
+git clone https://github.com/anisjkb/deed.git
+cd deed
+
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-python -m uvicorn src.backend.app:app --reload
 ```
-Open http://127.0.0.1:8000/
 
-# PowerShell Command to Remove __pycache__ Directories
+Create a `.env` file:
+
+```env
+DATABASE_URL=postgresql+asyncpg://username:password@localhost:5432/deeddb
+SECRET_KEY=your-secret-key
+```
+
+Run the application:
 
 ```bash
-Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
-
+uvicorn src.backend.app:app --reload
 ```
 
-Run Command:
+Visit:
 
-uvicorn src.backend.app:app --reload --host 127.0.0.1 --port 8000
+```text
+http://127.0.0.1:8000
+```
 
+## Suggested Screenshots
 
+Add screenshots here:
 
-requirements.txt (put this at repo root)
+```text
+docs/screenshots/homepage.png
+docs/screenshots/projects.png
+docs/screenshots/project-detail.png
+```
 
-fastapi==0.115.2
-uvicorn[standard]==0.30.6
-jinja2==3.1.4
-pydantic==2.9.2
-pydantic-settings==2.6.0
-SQLAlchemy==2.0.36
-asyncpg==0.29.0
-alembic==1.13.2
-python-multipart==0.0.9
-email-validator==2.2.0
-# Add these to requirements for security hardening
-fastapi-csrf-protect==0.3.5
-fastapi-limiter==0.1.6
-aioredis==2.0.1
-argon2-cffi==23.1.0
-passlib[argon2]==1.7.4
-pip-audit==2.7.3
-bandit==1.7.9
-ruff==0.6.9
-mypy==1.11.2
-sentry-sdk==2.14.0
-python-dotenv
-pytz
+## Future Improvements
+
+* API documentation page
+* Docker support
+* Automated testing
+* CI/CD pipeline
+* Advanced search and filtering
+* Performance monitoring
+
+## Author
+
+Developed by [Anis](https://github.com/anisjkb)
