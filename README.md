@@ -72,7 +72,7 @@ uvicorn src.backend.app:app --reload
 Visit:
 
 ```text
-http://127.0.0.1:8000
+https://deedpl.com/
 ```
 
 ## Suggested Screenshots
